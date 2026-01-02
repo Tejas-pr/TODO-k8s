@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend-todo
+  template:
+    metadata:
+      labels:
+        app: backend-todo
+    spec:
+      containers:
+        - name: backend-todo
+          image: 100xdevs/todo-app-test:1
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: backend-config
+                  key: port
